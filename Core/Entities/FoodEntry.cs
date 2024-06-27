@@ -4,8 +4,8 @@ namespace Core.Entities
 {
     public class FoodEntry : Base
     {
-        public string FoodName { get; private set; }
-        public NutrientInfo Nutrients { get; private set; }
+        public string FoodName { get; private set; } = default!;
+        public NutrientInfo Nutrients { get; private set; } = default!;
         public DateTime EntryDate { get; private set; }
 
         // Private constructor for EF Core and serialization
