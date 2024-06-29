@@ -7,10 +7,15 @@ FitrackPro is a health and fitness application designed to help users track thei
 ## Features
 
 - **User Management:** Allows users to register, login, and manage their profiles.
+
 - **Nutrition Tracking:** Enables users to log daily food entries, track calorie consumption, and view nutritional summaries.
+
 - **Weight Management:** Helps users set weight goals and track progress.
+
 - **BMI Calculation:** Provides BMI calculations based on user-provided height and weight.
+
 - **Data Persistence:** Stores user data securely using SQL Server.
+
 - **Testing:** Includes comprehensive unit tests using xUnit for core functionality.
 
 ## Technologies Used
