@@ -1,5 +1,5 @@
 using App.DTOs;
-using App.Interfaces;
+using App.Services.Interfaces;
 using Core.Entities;
 using Core.Interfaces;
 
