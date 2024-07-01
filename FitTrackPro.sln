@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitrackPro.Tests", "Fitrack
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App", "App\App.csproj", "{1A7A6865-2FFF-4AEF-A610-2280D66763E1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{92F6D0A0-484C-4E6E-B6B1-DBF08F7F155D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{1A7A6865-2FFF-4AEF-A610-2280D66763E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A7A6865-2FFF-4AEF-A610-2280D66763E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A7A6865-2FFF-4AEF-A610-2280D66763E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92F6D0A0-484C-4E6E-B6B1-DBF08F7F155D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92F6D0A0-484C-4E6E-B6B1-DBF08F7F155D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92F6D0A0-484C-4E6E-B6B1-DBF08F7F155D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92F6D0A0-484C-4E6E-B6B1-DBF08F7F155D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
