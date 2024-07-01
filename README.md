@@ -27,12 +27,11 @@ FitrackPro is a health and fitness application designed to help users track thei
 
 ## Getting Started
 
-
 ### Prerequisites
 
 - .NET Core SDK 8.0 or higher
 - Docker Desktop (optional for local development with containers)
-- SQL Server Management Studio (SSMS) or Azure Data Studio for database management
+- SQL Server Management Studio (SSMS) or Azure Data Studio for database management.
 
 ## Getting Started
 
