@@ -1,7 +1,7 @@
-using Core.Entities;
-using Core.Repositories;
 using App.DTOs;
 using App.Interfaces;
+using Core.Entities;
+using Core.Interfaces;
 
 namespace App.Services
 {
@@ -16,7 +16,7 @@ namespace App.Services
 
         public async Task<UserDto> GetUserByIdAsync(Guid userId)
         {
-            var user = await _userRepository.GetByIdAsync(userId);
+            var user = await _userRepository.GetUserByIdAsync(userId);
             if (user == null)
             {
                 throw new KeyNotFoundException($"User with ID {userId} not found.");
@@ -49,12 +49,12 @@ namespace App.Services
 
             var user = new User(createUserDto.Username, createUserDto.PasswordHash, person);
 
-            await _userRepository.AddAsync(user);
+            await _userRepository.AddUserAsync(user);
         }
 
         public async Task<decimal> TrackDailyCaloriesAsync(Guid userId, DateTime date)
         {
-            var user = await _userRepository.GetByIdAsync(userId);
+            var user = await _userRepository.GetUserByIdAsync(userId);
             if (user == null)
             {
                 throw new KeyNotFoundException($"User with ID {userId} not found.");
@@ -65,7 +65,7 @@ namespace App.Services
 
         public async Task<decimal> CalculateBMIAsync(Guid userId)
         {
-            var user = await _userRepository.GetByIdAsync(userId);
+            var user = await _userRepository.GetUserByIdAsync(userId);
             if (user == null)
             {
                 throw new KeyNotFoundException($"User with ID {userId} not found.");
@@ -76,14 +76,19 @@ namespace App.Services
 
         public async Task SetWeightGoalAsync(Guid userId, decimal targetWeight)
         {
-            var user = await _userRepository.GetByIdAsync(userId);
+            var user = await _userRepository.GetUserByIdAsync(userId);
             if (user == null)
             {
                 throw new KeyNotFoundException($"User with ID {userId} not found.");
             }
 
             user.SetWeightGoal(targetWeight);
-            await _userRepository.UpdateAsync(user);
+            await _userRepository.UpdateUserAsync(user);
+        }
+
+        public Task<UserDto> UpdateByIdAsync(Guid userId)
+        {
+            throw new NotImplementedException();
         }
     }
 }
