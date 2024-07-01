@@ -27,6 +27,7 @@ FitrackPro is a health and fitness application designed to help users track thei
 
 ## Getting Started
 
+
 ### Prerequisites
 
 - .NET Core SDK 8.0 or higher
