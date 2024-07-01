@@ -1,21 +1,21 @@
-using System;
 using System.Data;
-using System.Threading.Tasks;
 using Core.Entities;
 using Core.Interfaces;
 using Dapper;
+using Infrastructure.Infra;
 using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
 
 namespace Infrastructure.Repositories
 {
     public class UserRepository : IUserRepository
     {
         private readonly IDbConnection _dbConnection;
+        private readonly SqlConnectionFactory _sqlConnectionFactory;
 
-        public UserRepository(IConfiguration configuration)
+        public UserRepository(SqlConnectionFactory sqlConnectionFactory)
         {
-            _dbConnection = new SqlConnection(Environment.GetEnvironmentVariable("CONNECTION_STRING"));
+            _sqlConnectionFactory = sqlConnectionFactory;
+            _dbConnection = _sqlConnectionFactory.CreateConnection();
         }
 
         public async Task<User> GetUserByIdAsync(Guid id)
@@ -41,9 +41,5 @@ namespace Infrastructure.Repositories
             string sqlQuery = "DELETE FROM Users WHERE Id = @Id";
             await _dbConnection.ExecuteAsync(sqlQuery, new { Id = id });
         }
-    }
-
-    public interface IConfiguration
-    {
     }
 }
