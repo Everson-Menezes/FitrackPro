@@ -7,7 +7,6 @@ namespace Core.ValueObjects
         public decimal Carbohydrates { get; private set; }
         public decimal Fats { get; private set; }
 
-        // Private constructor for EF Core and serialization
         private NutrientInfo() { }
 
         public NutrientInfo(decimal calories, decimal protein, decimal carbohydrates, decimal fats)
