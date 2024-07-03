@@ -1,10 +1,11 @@
 using System.Data;
+using Infrastructure.Interfaces;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 
-namespace Infrastructure.Infra
+namespace Infrastructure.Factories
 {
-    public class SqlConnectionFactory
+    public class SqlConnectionFactory : ISqlConnectionFactory
     {
         private readonly IConfiguration _configuration;
 

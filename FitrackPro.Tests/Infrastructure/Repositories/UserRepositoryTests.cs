@@ -1,24 +1,21 @@
-using System.Data;
 using Core.Entities;
 using Infrastructure.Repositories;
 using Moq;
-using Dapper;
-using Infrastructure.Infra;
+using Infrastructure.Interfaces;
 
 namespace Infrastructure.Tests.Repositories
 {
     public class UserRepositoryTests
     {
-        private readonly Mock<IDbConnection> _mockDbConnection;
-        private readonly Mock<SqlConnectionFactory> _mockSqlConnectionFactory;
+        private readonly Mock<IDbService> _mockDbService;
+        private readonly Mock<ISqlConnectionFactory> _mockSqlConnectionFactory;
         private readonly UserRepository _userRepository;
 
         public UserRepositoryTests()
         {
-            _mockDbConnection = new Mock<IDbConnection>();
-            _mockSqlConnectionFactory = new Mock<SqlConnectionFactory>();
-            _mockSqlConnectionFactory.Setup(factory => factory.CreateConnection()).Returns(_mockDbConnection.Object);
-            _userRepository = new UserRepository(_mockSqlConnectionFactory.Object);
+            _mockDbService = new Mock<IDbService>();
+            _mockSqlConnectionFactory = new Mock<ISqlConnectionFactory>();
+            _userRepository = new UserRepository(_mockSqlConnectionFactory.Object, _mockDbService.Object);
         }
 
         [Fact]
@@ -28,8 +25,8 @@ namespace Infrastructure.Tests.Repositories
             var userId = Guid.NewGuid();
             var expectedUser = UserTestHelper.CreateUserInstance();
 
-            _mockDbConnection
-                .Setup(db => db.QuerySingleOrDefaultAsync<User>(It.IsAny<string>(), It.IsAny<object>(), null, null, default))
+            _mockDbService
+                .Setup(db => db.QuerySingleOrDefaultAsync<User>(It.IsAny<string>(), It.IsAny<object>()))
                 .ReturnsAsync(expectedUser);
 
             // Act
@@ -44,21 +41,21 @@ namespace Infrastructure.Tests.Repositories
         {
             // Arrange
             var user = UserTestHelper.CreateUserInstance();
-            _mockDbConnection
-                .Setup(db => db.ExecuteAsync(It.IsAny<string>(), It.IsAny<object>(), null, null, default))
+            _mockDbService
+                .Setup(db => db.ExecuteAsync(It.IsAny<string>(), It.IsAny<object>()))
                 .ReturnsAsync(1);
 
             // Act
             await _userRepository.AddUserAsync(user);
 
             // Assert
-            _mockDbConnection.Verify(db => db.ExecuteAsync(It.IsAny<string>(), It.Is<object>(obj =>
+            _mockDbService.Verify(db => db.ExecuteAsync(It.IsAny<string>(), It.Is<object>(obj =>
                 ((Guid)obj.GetType().GetProperty("Id").GetValue(obj)) == user.Id &&
                 (string)obj.GetType().GetProperty("FirstName").GetValue(obj) == user.Person.FirstName &&
                 (string)obj.GetType().GetProperty("LastName").GetValue(obj) == user.Person.LastName &&
                 (string)obj.GetType().GetProperty("Email").GetValue(obj) == user.Person.Email &&
                 (string)obj.GetType().GetProperty("PasswordHash").GetValue(obj) == user.PasswordHash
-            ), null, null, default), Times.Once);
+            )), Times.Once);
         }
 
         [Fact]
@@ -67,21 +64,21 @@ namespace Infrastructure.Tests.Repositories
             // Arrange
             var user = UserTestHelper.CreateUserInstance();
 
-            _mockDbConnection
-                .Setup(db => db.ExecuteAsync(It.IsAny<string>(), It.IsAny<object>(), null, null, default))
+            _mockDbService
+                .Setup(db => db.ExecuteAsync(It.IsAny<string>(), It.IsAny<object>()))
                 .ReturnsAsync(1);
 
             // Act
             await _userRepository.UpdateUserAsync(user);
 
             // Assert
-            _mockDbConnection.Verify(db => db.ExecuteAsync(It.IsAny<string>(), It.Is<object>(obj =>
+            _mockDbService.Verify(db => db.ExecuteAsync(It.IsAny<string>(), It.Is<object>(obj =>
                 ((Guid)obj.GetType().GetProperty("Id").GetValue(obj)) == user.Id &&
                 (string)obj.GetType().GetProperty("FirstName").GetValue(obj) == user.Person.FirstName &&
                 (string)obj.GetType().GetProperty("LastName").GetValue(obj) == user.Person.LastName &&
                 (string)obj.GetType().GetProperty("Email").GetValue(obj) == user.Person.Email &&
                 (string)obj.GetType().GetProperty("PasswordHash").GetValue(obj) == user.PasswordHash
-            ), null, null, default), Times.Once);
+            )), Times.Once);
         }
 
         [Fact]
@@ -90,17 +87,17 @@ namespace Infrastructure.Tests.Repositories
             // Arrange
             var userId = Guid.NewGuid();
 
-            _mockDbConnection
-                .Setup(db => db.ExecuteAsync(It.IsAny<string>(), It.IsAny<object>(), null, null, default))
+            _mockDbService
+                .Setup(db => db.ExecuteAsync(It.IsAny<string>(), It.IsAny<object>()))
                 .ReturnsAsync(1);
 
             // Act
             await _userRepository.DeleteUserAsync(userId);
 
             // Assert
-            _mockDbConnection.Verify(db => db.ExecuteAsync(It.IsAny<string>(), It.Is<object>(obj =>
+            _mockDbService.Verify(db => db.ExecuteAsync(It.IsAny<string>(), It.Is<object>(obj =>
                 ((Guid)obj.GetType().GetProperty("Id").GetValue(obj)) == userId
-            ), null, null, default), Times.Once);
+            )), Times.Once);
         }
     }
 }
