@@ -1,24 +1,42 @@
 name: CI/CD Pipeline - Development
 
 on:
-  push:
+  pull_request:
     branches:
       - develop
 
 jobs:
-  build:
-
+  branch-check:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v4
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Check branch name
+        run: |
+          echo "Pull request branch: ${{ github.head_ref }}"
+          if [[ ! "${{ github.head_ref }}" =~ develop$ ]]; then
+            echo "Branch name does not end with 'develop'."
+            exit 1
+          fi
+
+  build:
+    runs-on: ubuntu-latest
+    needs: branch-check
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+          
+      - name: Restore dependencies
+        run: dotnet restore
+      
+      - name: Build
+        run: dotnet build --no-restore
+
+      - name: Tests
+        run: dotnet test --no-build --verbosity normal
