@@ -10,6 +10,5 @@ namespace App.Interfaces
         Task<decimal> CalculateBMIAsync(Guid userId);
         Task SetWeightGoalAsync(Guid userId, decimal targetWeight);
         Task<UserDto> UpdateByIdAsync(Guid userId);
-
     }
 }
