@@ -1,7 +1,7 @@
 using App.DTOs;
-using App.Services.Interfaces;
+using App.Interfaces;
 using Core.Entities;
-using Core.Interfaces;
+using Core.Interfaces.Repositories;
 
 namespace App.Services
 {

@@ -1,6 +1,6 @@
 using App.DTOs;
 
-namespace App.Services.Interfaces
+namespace App.Interfaces
 {
     public interface IUserService
     {
@@ -10,6 +10,5 @@ namespace App.Services.Interfaces
         Task<decimal> CalculateBMIAsync(Guid userId);
         Task SetWeightGoalAsync(Guid userId, decimal targetWeight);
         Task<UserDto> UpdateByIdAsync(Guid userId);
-
     }
 }
