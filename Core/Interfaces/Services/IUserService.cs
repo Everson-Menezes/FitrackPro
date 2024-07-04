@@ -1,15 +1,16 @@
-using App.DTOs;
 
-namespace App.Services.Interfaces
+using Core.Entities;
+
+namespace Core.Interfaces.Services
 {
     public interface IUserService
     {
-        Task<UserDto> GetUserByIdAsync(Guid userId);
-        Task CreateUserAsync(CreateUserDto createUserDto);
+        Task<User> GetUserByIdAsync(Guid userId);
+        Task CreateUserAsync(User user);
         Task<decimal> TrackDailyCaloriesAsync(Guid userId, DateTime date);
         Task<decimal> CalculateBMIAsync(Guid userId);
         Task SetWeightGoalAsync(Guid userId, decimal targetWeight);
-        Task<UserDto> UpdateByIdAsync(Guid userId);
+        Task<User> UpdateByIdAsync(Guid userId);
 
     }
 }
