@@ -1,0 +1,51 @@
+name: CI/CD Pipeline - Production
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  branch-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check branch name
+        run: |
+          echo "Push branch: ${{ github.ref }}"
+          if [[ ! "${{ github.ref }}" =~ ^refs/heads/release_[0-9]+\.[0-9]+$ ]]; then
+            echo "Branch name does not match 'release_x.xx' format."
+            exit 1
+          fi
+
+  build:
+    runs-on: ubuntu-latest
+    needs: branch-check
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+          
+      - name: Restore dependencies
+        run: dotnet restore
+      
+      - name: Build Release Version
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Run Tests
+        run: dotnet test --configuration Release --no-build --verbosity normal
+
+      - name: Publish Artifacts
+        run: dotnet publish --configuration Release --no-build --output ./artifacts
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifacts
+          path: ./artifacts
