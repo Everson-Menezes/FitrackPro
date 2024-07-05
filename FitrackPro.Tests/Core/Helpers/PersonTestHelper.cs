@@ -2,7 +2,7 @@ using Core.Entities;
 using Core.Enums;
 using System;
 
-public static class PersonTestHelpers
+public static class PersonTestHelper
 {
     public static Person CreatePersonInstance(string firstName = "John", string lastName = "Doe", 
         DateTime dateOfBirth = default, Gender gender = Gender.Male, decimal height = 1.8m, 

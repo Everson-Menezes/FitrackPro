@@ -88,8 +88,7 @@ namespace Tests.Core.Entities
 
         private User CreateUserInstance()
         {
-            var person = new Person("John", "Doe", new DateTime(1990, 1, 1), Gender.Male, 1.8m, 75, "john.doe@example.com", "(99)99999-9999", 70);
-            var user = new User("johndoe", "passwordhash", person);
+            var user = UserTestHelper.CreateUserInstance();
             return user;
         }
     }

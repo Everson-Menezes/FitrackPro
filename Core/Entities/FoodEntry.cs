@@ -8,7 +8,6 @@ namespace Core.Entities
         public NutrientInfo Nutrients { get; private set; } = default!;
         public DateTime EntryDate { get; private set; }
 
-        // Private constructor for EF Core and serialization
         private FoodEntry() { }
 
         public FoodEntry(string foodName, NutrientInfo nutrients, DateTime entryDate)

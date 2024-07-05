@@ -13,7 +13,6 @@ namespace Core.Entities
         private readonly List<FoodEntry> _foodEntries = new List<FoodEntry>();
         public IReadOnlyCollection<FoodEntry> FoodEntries => _foodEntries.AsReadOnly();
 
-        // Private constructor for EF Core and serialization
         private User() { }
 
         public User(string username, string passwordHash, Person person)
